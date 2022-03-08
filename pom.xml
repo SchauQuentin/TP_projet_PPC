@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>Projet_TP_ppc</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.ppcproject</groupId>
+    <artifactId>OrdoProject</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.mainClass>Main</project.mainClass>
+        <project.outDirectory>${project.build.directory}/out</project.outDirectory>
     </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.choco-solver</groupId>
+            <artifactId>choco-solver</artifactId>
+            <version>4.10.8</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <argument>${project.mainClass}</argument>
+                    </arguments>
+                    <workingDirectory>${project.outDirectory}</workingDirectory>
+                    <mainClass>${project.mainClass}</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
