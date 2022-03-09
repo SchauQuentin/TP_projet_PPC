@@ -7,25 +7,44 @@ public class Main {
     public static void main(String[] args) {
 
         Instance instance = new Instance(10,15);
-        instance.println();;
+        instance.println();
 
-        int n = 8;
-        Model model = new Model(n + "-queens problem");
+        Scheduling scheduling = new Scheduling(instance);
+
+        Solution solution = scheduling.getModel().getSolver().findSolution();
+        if(solution != null){
+            System.out.println(solution.toString());
+        }else{
+            System.out.println("Aucune solution trouvee");
+        }
+
+    }
+
+
+    public static void carre_magique(int n) {
+        Model model = new Model("Carre magique " + n + "*" + n);
+        //variable
         IntVar[] vars = new IntVar[n];
-        for(int q = 0; q < n; q++){
-            vars[q] = model.intVar("Q_"+q, 1, n);
+        for (int var = 0; var < n; var++) {
+            vars[var] = model.intVar("X" + var, 1, 9);
         }
-        for(int i  = 0; i < n-1; i++){
-            for(int j = i + 1; j < n; j++){
-                model.arithm(vars[i], "!=",vars[j]).post();
-                model.arithm(vars[i], "!=", vars[j], "-", j - i).post();
-                model.arithm(vars[i], "!=", vars[j], "+", j - i).post();
-            }
-        }
+
+        //contrainte
+        model.allDifferent(vars).post();
+        model.sum(new IntVar[]{vars[0],vars[1],vars[2]},"=",15 ).post();
+        model.sum(new IntVar[]{vars[3],vars[4],vars[5]},"=",15 ).post();
+        model.sum(new IntVar[]{vars[6],vars[7],vars[8]},"=",15 ).post();
+        model.sum(new IntVar[]{vars[0],vars[3],vars[6]},"=",15 ).post();
+        model.sum(new IntVar[]{vars[1],vars[4],vars[7]},"=",15 ).post();
+        model.sum(new IntVar[]{vars[2],vars[5],vars[8]},"=",15 ).post();
+        model.sum(new IntVar[]{vars[0],vars[4],vars[8]},"=",15 ).post();
+        model.sum(new IntVar[]{vars[6],vars[4],vars[2]},"=",15 ).post();
+
         Solution solution = model.getSolver().findSolution();
         if(solution != null){
             System.out.println(solution.toString());
+        }else{
+            System.out.println("Aucun solution trouver");
         }
-
     }
 }
