@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Instance instance = new Instance(10,15);
+        Instance instance = new Instance("test");
         instance.println();
 
         Scheduling scheduling = new Scheduling(instance);

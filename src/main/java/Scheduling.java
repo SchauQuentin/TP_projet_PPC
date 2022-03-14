@@ -16,6 +16,7 @@ public class Scheduling
 
         model = new Model("Scheduling");
         tasks = new Activity[instance.getN()];
+        l_activities = new IntVar[instance.getN()];
 
         int min_dd_activity = Integer.MAX_VALUE; //the minimum of due date of all activity
         int max_lower_bound_l_activity = Integer.MIN_VALUE;
@@ -49,8 +50,8 @@ public class Scheduling
     private void constraint_creation() {
 
         //disjunction constraints
-        for (int i = 0; i < instance.getN(); i++) {
-            for (int j = i + 1; i < instance.getN(); j++) {
+        for (int i = 0; i < instance.getN()-1; i++) {
+            for (int j = i + 1; j < instance.getN(); j++) {
                 model.or(model.arithm(tasks[i].getEnd(),"<=",tasks[j].getStart()), model.arithm(tasks[j].getEnd(),"<=",tasks[i].getStart())).post();
             }
         }
